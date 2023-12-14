@@ -28,7 +28,7 @@ def genere_flux(gamma, ß, N, P):
     flux = []
     for j in range(P):
         x = np.random.exponential(ß, size=N) * gamma
-        flux += x / np.sum(x)
+        flux = flux + list(x / np.sum(x))
 
     return flux
 
@@ -49,7 +49,7 @@ def genere_data(N, P, ß, gamma, taille):
         flux_j = genere_flux(gamma, ß, N, P)
         data_j = []
         for i in flux_j:
-            data_j += generer_echantillons_poisson(taille, i)
+            data_j = data + list(generer_echantillons_poisson(taille, i))
         data += data_j
         flux += flux_j
     return data, flux
