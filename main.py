@@ -8,5 +8,5 @@ gamma = 1
 beta = 1
 
 data = genere_data(N, P, beta, gamma, 100)
-plot_data(data)
+print(data)
 
