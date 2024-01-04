@@ -7,6 +7,6 @@ N = 3
 gamma = 1
 beta = 1
 
-data = genere_data(N, P, beta, gamma, 100)
+data = genere_data(N, P, beta, gamma, 10)
 print(data)
 

@@ -6,4 +6,7 @@ M <= 15 : nombre  de capteurs\
 N : nombre de routes\
 P <= 6 : nombre de scénrios
 
-phi(i,j) : flux pour la route i sous le scénario j
+$i \in [|o;N|]$ : route n°i\
+$j \in [|0;P|]$ : scénario n°P
+
+phi(j,i) : flux pour la route i sous le scénario j
