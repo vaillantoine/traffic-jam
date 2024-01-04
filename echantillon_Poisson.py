@@ -1,9 +1,8 @@
 import numpy as np
 
 
-def genere_flux(N):
-    gamma = np.random.exponential(size=N)
-    flux = np.random.exponential(N)
+def genere_flux(N, beta, gamma):
+    xj = np.random.exponential(scale=beta, size=N)
 
 
 def genere_data(N, P, ß, gamma, taille):
