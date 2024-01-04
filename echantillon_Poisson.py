@@ -1,36 +1,9 @@
 import numpy as np
 
 
-def generer_echantillons_poisson(taille, lambda_param):
-    """
-    Génère des échantillons suivant la loi de Poisson.
-
-    Parameters:
-        taille (int): Le nombre d'échantillons à générer.
-        lambda_param (float): Le paramètre lambda de la distribution de Poisson.
-
-    Returns:
-        numpy.ndarray: Tableau contenant les échantillons générés.
-    """
-    echantillons = np.random.poisson(lambda_param, taille)
-    return echantillons
-
-
-def genere_flux(gamma, ß, N, P):
-    """
-    On genere des scénarios de flux avec des lois exponentielles
-    :param gamma: réel positif
-    :param ß: réel positif associé à la moyenne de la loi exp
-    :param N: le nombre de route
-    :param P: le nombre de scénarios
-    :return: le flux
-    """
-    flux = []
-    for j in range(P):
-        x = np.random.exponential(ß, size=N) * gamma
-        flux = flux + list(x / np.sum(x))
-
-    return flux
+def genere_flux(N):
+    gamma = np.random.exponential(size=N)
+    flux = np.random.exponential(N)
 
 
 def genere_data(N, P, ß, gamma, taille):
