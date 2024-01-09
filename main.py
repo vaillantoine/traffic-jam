@@ -2,11 +2,14 @@ from echantillon_Poisson import *
 from plot import *
 
 
-P = 2
-N = 3
-gamma = 1
-beta = 1
+P = 6
+N = 15
+gamma = 10
+N_voiture=50
 
-data = genere_data(N, P, beta, gamma, 10)
-print(data)
+data,flux = genere_data(N, P, gamma, N_voiture)
 
+
+v=classestime(flux,data[:,3])
+#print(v)
+print(flux)
