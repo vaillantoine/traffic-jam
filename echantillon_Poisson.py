@@ -9,8 +9,7 @@ def genere_flux(N, beta, gamma):
 
 
 def genere_data(N, P, beta, gamma, taille):
-    flux = np.array([genere_flux(N, beta, gamma) for j in
-                     range(P)]).transpose()  # flux[i,j] contient le flux de la route i sus le scénario j
+    flux = np.array([genere_flux(N, beta, gamma) for j in range(P)]).transpose()  # flux[i,j] contient le flux de la route i sus le scénario j
 
     data = np.zeros((N, P, taille))  # data[i,j,n] contient la valeur simulée n°n pour la route i sous le scénarion j
     for i in range(N):
