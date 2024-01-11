@@ -1,5 +1,5 @@
 import numpy as np
-
+from itertools import combinations
 def genere_flux(N,  gamma, N_voiture):
     xj = np.random.exponential(scale=1, size=N)
     xjgamma = np.power(xj, gamma)
@@ -27,7 +27,8 @@ def vraisemblance( j, flux, data):
     N,P=flux.shape
     l=1
     for i in range(N):
-        l*= np.exp(-flux[i,j]) * (flux[i,j]**data[i]) / np.math.factorial(data[i])
+       # l*= np.exp(-flux[i,j]) * (flux[i,j]**data[i]) / np.math.factorial(data[i])
+        l+=-flux[i,j] + data[i]*np.log(flux[i,j])
     return l
 
 def classestime(flux,data):
@@ -35,3 +36,19 @@ def classestime(flux,data):
     L=[vraisemblance(j,flux,data ) for j in range(P)]
     j=L.index(max(L))
     return j
+
+def bhattacharyya(flux1, flux2):
+    return ((1/2) * (flux1+flux2)) - np.sqrt(flux1*flux2)
+
+def combinaison_routes_optimales(flux,taille_combinaison):
+    max=0
+    indice=[]
+    for combination in combinations(range(flux.shape[0]),taille_combinaison):
+        a=1
+        for route in combination:
+            B=bhattacharyya(flux[route,0],flux[route,1])
+            a*=B    #borne de bhattacharyya calculée
+        if a>max:
+            max=a
+            indice=combination
+    return indice, max  #retourne la combinaison et sa borne de bhattacharyya (B_ronde)
