@@ -13,6 +13,8 @@ def plot_data(flux):
     fig, ax = plt.subplots()
     for j in range(P):
         ax.plot(range(N), flux[:,j], label=f'senario {j}')
+    ax.set_xlabel("n° route")
+    ax.set_ylabel("flux moyen")
     plt.legend()
     plt.savefig("./fig/plotdata.png")
     plt.show()
@@ -22,6 +24,8 @@ def plot_vraisemblance(flux, data):
     L=[vraisemblance(j,flux,data ) for j in range(P)]
     fig, ax = plt.subplots()
     ax.plot(range(P),L)
+    ax.set_xlabel("n° scénario")
+    ax.set_ylabel("log-vraisemblance")
     plt.savefig("./fig/plot_vraisemblance.png")
     plt.show()
 
@@ -34,6 +38,8 @@ def hist_estime():
     print(np.histogram(C))
     fig, ax = plt.subplots()
     ax.hist(C,bins=range(P))
+    ax.set_xlabel("n° scénario")
+    ax.set_ylabel("nombre de classification")
     plt.savefig("./fig/hist_estime.png")
     plt.show()
 
