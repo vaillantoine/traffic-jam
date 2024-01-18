@@ -6,7 +6,7 @@ N = 15
 P = 6
 gamma = 0.5
 N_voiture = 50
-
+M=10
 
 def plot_data(flux):
     N,P = flux.shape
@@ -43,7 +43,7 @@ def hist_estime():
     plt.savefig("./fig/hist_estime.png")
     plt.show()
 
-def plot_perf(N,P,N_voiture):
+def plot_perf(N,P,gamma,M, N_voiture):
         plt.subplot(131)
         L=[]
         K=[]
@@ -54,7 +54,17 @@ def plot_perf(N,P,N_voiture):
         plt.plot(L)
         plt.plot(K)
         plt.show()
-
+        L = []
+        K = []
+        plt.subplot(132)
+        for g in range(11):
+            gamma = np.exp(-(g-5))
+            data, flux = genere_data(N, P, gamma, N_voiture)
+            K.append(erreur_exp(N, P, M, gamma, N_voiture))  # liste de proba d'erreur
+            L.append(borne_proba_erreur(flux))  # liste de borne sup
+        plt.plot(L)
+        plt.plot(K)
+        plt.show()
 
 
 
@@ -63,5 +73,5 @@ if __name__ == '__main__':
     # plot_data(flux)
     # plot_vraisemblance(flux, data[:, 3], P) #toutes les routes sur le senarios 5
     # hist_estime()
-    plot_perf(N, P, N_voiture)
+    plot_perf(N,P,gamma,M, N_voiture)
 
