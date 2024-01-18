@@ -71,11 +71,10 @@ def bhattacharyya_generalise(flux):
     return dBG
 
 def borne_proba_erreur(flux):
-    N,P = flux.shape
     return (1/2)*np.exp(-bhattacharyya_generalise(flux))
 def erreur_exp(N,P,M,gamma,N_voiture):
     C = [0 for k in range(P)]
-    for k in range(10000):
+    for k in range(100):
         data, flux = genere_data(N, P, gamma, N_voiture)
         index, _ = combinaison_routes_optimales(flux,M) #indice qu'on veut garder
         for i in range(P-1, -1, -1):
@@ -85,6 +84,5 @@ def erreur_exp(N,P,M,gamma,N_voiture):
         C[classestime(flux, data[:, 3])] +=1
     C.pop(3)
     C=np.array(C)
-    C=C/10000
-    print(C)
+    C=C/100
     return np.sum(C)
