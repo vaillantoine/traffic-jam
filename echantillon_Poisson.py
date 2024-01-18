@@ -38,7 +38,15 @@ def classestime(flux,data):
     return j
 
 def bhattacharyya(flux1, flux2):
-    return ((1/2) * (flux1+flux2)) - np.sqrt(flux1*flux2)
+    return (1/2) * (flux1+flux2) - np.sqrt(flux1*flux2)
+
+def bhattacharyya_N(flux1, flux2):
+    a = 0
+    N = flux1.shape[0]
+    for i in range(N):
+        B = bhattacharyya(flux1[i], flux2[i])
+        a += B
+    return a
 
 def combinaison_routes_optimales(flux,taille_combinaison):
     max=0
@@ -52,3 +60,31 @@ def combinaison_routes_optimales(flux,taille_combinaison):
             max=a
             indice=combination
     return indice, max  #retourne la combinaison et sa borne de bhattacharyya (B_ronde)
+
+def bhattacharyya_generalise(flux):
+    N,P = flux.shape
+    c=0
+    for j1 in range(P):
+        for j2 in range(j1+1,P):
+            c+=np.exp(-bhattacharyya_N(flux[:,j1],flux[:,j2]))
+    dBG=-np.log((2/P)*c)
+    return dBG
+
+def borne_proba_erreur(flux):
+    N,P = flux.shape
+    return (1/2)*np.exp(-bhattacharyya_generalise(flux))
+def erreur_exp(N,P,M,gamma,N_voiture):
+    C = [0 for k in range(P)]
+    for k in range(10000):
+        data, flux = genere_data(N, P, gamma, N_voiture)
+        index, _ = combinaison_routes_optimales(flux,M) #indice qu'on veut garder
+        for i in range(P-1, -1, -1):
+            if i not in index:
+                np.delete(data, i, axis=1)
+                np.delete(flux, i, axis=1)
+        C[classestime(flux, data[:, 3])] +=1
+    C.pop(3)
+    C=np.array(C)
+    C=C/10000
+    print(C)
+    return np.sum(C)
